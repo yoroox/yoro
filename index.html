@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GitHub Permissions</title>
+</head>
+<body>
+  <h1>GitHub Permissions</h1>
+  <p>This page requests all permissions from the user.</p>
+  
+  <script>
+    // Request all permissions
+    navigator.permissions.query({ name: 'geolocation' })
+      .then(permissionStatus => {
+        console.log('Geolocation permission:', permissionStatus.state);
+        permissionStatus.onchange = () => {
+          console.log('Geolocation permission changed:', permissionStatus.state);
+        };
+      });
+
+    navigator.permissions.query({ name: 'notifications' })
+      .then(permissionStatus => {
+        console.log('Notifications permission:', permissionStatus.state);
+        permissionStatus.onchange = () => {
+          console.log('Notifications permission changed:', permissionStatus.state);
+        };
+      });
+
+    navigator.permissions.query({ name: 'camera' })
+      .then(permissionStatus => {
+        console.log('Camera permission:', permissionStatus.state);
+        permissionStatus.onchange = () => {
+          console.log('Camera permission changed:', permissionStatus.state);
+        };
+      });
+
+    navigator.permissions.query({ name: 'microphone' })
+      .then(permissionStatus => {
+        console.log('Microphone permission:', permissionStatus.state);
+        permissionStatus.onchange = () => {
+          console.log('Microphone permission changed:', permissionStatus.state);
+        };
+      });
+
+    navigator.permissions.query({ name: 'usb' })
+      .then(permissionStatus => {
+        console.log('USB permission:', permissionStatus.state);
+        permissionStatus.onchange = () => {
+          console.log('USB permission changed:', permissionStatus.state);
+        };
+      });
+
+    navigator.permissions.query({ name: 'nfc' })
+      .then(permissionStatus => {
+        console.log('NFC permission:', permissionStatus.state);
+        permissionStatus.onchange = () => {
+          console.log('NFC permission changed:', permissionStatus.state);
+        };
+      });
+  </script>
+</body>
+</html>
