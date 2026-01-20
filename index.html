@@ -1,62 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GitHub Permissions</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YORO</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f1a3a 0%, #001233 50%, #0a1f44 100%);
+      color: #e0f7ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ocean background with moving gradient */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(45deg, #001f3f, #0077be, #00aaff, #0077be, #001f3f);
+      background-size: 400% 400%;
+      animation: oceanFlow 18s ease infinite;
+      opacity: 0.85;
+      z-index: -2;
+    }
+
+    @keyframes oceanFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating particles / bubbles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(173, 216, 230, 0.7);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(173, 216, 230, 0.9);
+      animation: float 18s infinite linear, fade 18s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0.4); }
+      100% { transform: translateY(-15vh) scale(0.9); }
+    }
+
+    @keyframes fade {
+      0%, 100% { opacity: 0; }
+      10%, 90% { opacity: 0.7; }
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 2rem;
+    }
+
+    .name {
+      font-size: clamp(5rem, 18vw, 14rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      background: linear-gradient(90deg, #a5f3fc, #67e8f9, #22d3ee, #06b6d4, #0891b2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 100%;
+      animation: shine 6s linear infinite;
+      text-shadow: 0 0 60px rgba(34, 211, 238, 0.6);
+      filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.7));
+    }
+
+    @keyframes shine {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .tagline {
+      font-size: clamp(1.5rem, 5vw, 3.2rem);
+      margin: 1.5rem 0 3rem;
+      color: #a5f3fc;
+      opacity: 0.9;
+      letter-spacing: 0.05em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 5vh;
+      font-size: 1.1rem;
+      color: #67e8f9;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
+      50%      { opacity: 1;   transform: translateY(12px); }
+    }
+
+    /* Simple 3D card effect section (you can add more later) */
+    .section {
+      padding: 12vh 5vw;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-3d {
+      width: 320px;
+      height: 420px;
+      background: linear-gradient(135deg, rgba(10, 40, 70, 0.7), rgba(0, 30, 60, 0.5));
+      border-radius: 24px;
+      border: 1px solid rgba(103, 232, 249, 0.25);
+      backdrop-filter: blur(12px);
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.6),
+        inset 0 0 40px rgba(103, 232, 249, 0.12);
+      transform-style: preserve-3d;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-3d:hover {
+      transform: translateY(-20px) rotateX(8deg) rotateY(12deg) scale(1.06);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+    }
+
+    .card-3d::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: radial-gradient(circle at 30% 20%, rgba(103,232,249,0.25) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.6s;
+      pointer-events: none;
+    }
+
+    .card-3d:hover::before {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-  <h1>GitHub Permissions</h1>
-  <p>This page requests all permissions from the user.</p>
-  
+
+  <div class="particles" id="particles"></div>
+
+  <section class="hero">
+    <h1 class="name">YORO</h1>
+    <p class="tagline">deep • calm • unstoppable</p>
+    <div class="scroll-hint">scroll to dive deeper ↓</div>
+  </section>
+
+  <section class="section">
+    <div class="card-3d">
+      <!-- You can put content here later -->
+    </div>
+  </section>
+
   <script>
-    // Request all permissions
-    navigator.permissions.query({ name: 'geolocation' })
-      .then(permissionStatus => {
-        console.log('Geolocation permission:', permissionStatus.state);
-        permissionStatus.onchange = () => {
-          console.log('Geolocation permission changed:', permissionStatus.state);
-        };
-      });
+    // Generate floating bubbles / particles
+    function createParticle() {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      
+      const size = Math.random() * 6 + 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (Math.random() * 12 + 12) + 's';
+      p.style.animationDelay = Math.random() * 8 + 's';
+      
+      document.getElementById('particles').appendChild(p);
+      
+      // Remove after animation
+      setTimeout(() => p.remove(), 20000);
+    }
 
-    navigator.permissions.query({ name: 'notifications' })
-      .then(permissionStatus => {
-        console.log('Notifications permission:', permissionStatus.state);
-        permissionStatus.onchange = () => {
-          console.log('Notifications permission changed:', permissionStatus.state);
-        };
-      });
-
-    navigator.permissions.query({ name: 'camera' })
-      .then(permissionStatus => {
-        console.log('Camera permission:', permissionStatus.state);
-        permissionStatus.onchange = () => {
-          console.log('Camera permission changed:', permissionStatus.state);
-        };
-      });
-
-    navigator.permissions.query({ name: 'microphone' })
-      .then(permissionStatus => {
-        console.log('Microphone permission:', permissionStatus.state);
-        permissionStatus.onchange = () => {
-          console.log('Microphone permission changed:', permissionStatus.state);
-        };
-      });
-
-    navigator.permissions.query({ name: 'usb' })
-      .then(permissionStatus => {
-        console.log('USB permission:', permissionStatus.state);
-        permissionStatus.onchange = () => {
-          console.log('USB permission changed:', permissionStatus.state);
-        };
-      });
-
-    navigator.permissions.query({ name: 'nfc' })
-      .then(permissionStatus => {
-        console.log('NFC permission:', permissionStatus.state);
-        permissionStatus.onchange = () => {
-          console.log('NFC permission changed:', permissionStatus.state);
-        };
-      });
+    // Create many particles
+    setInterval(createParticle, 400);
+    // Initial burst
+    for(let i = 0; i < 40; i++) createParticle();
   </script>
+
 </body>
 </html>
